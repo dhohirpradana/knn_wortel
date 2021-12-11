@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:palette_generator/palette_generator.dart';
-
 import 'knn.dart';
 
 class PaletteController extends GetxController {
@@ -20,7 +19,12 @@ class PaletteController extends GetxController {
     paletteGenerator = await PaletteGenerator.fromImageProvider(
       Image.file(file).image,
     );
-    final color = paletteGenerator!.dominantColor!.color;
+    final color = (paletteGenerator!.darkMutedColor != null)
+        ? paletteGenerator!.darkMutedColor!.color
+        : paletteGenerator!.darkVibrantColor!.color;
+    final darkPopulation = (paletteGenerator!.darkMutedColor != null)
+        ? paletteGenerator!.darkMutedColor!.population
+        : 0;
     final hsl = HSLColor.fromColor(color);
     rgbhsl = [
       color.red,
@@ -31,7 +35,7 @@ class PaletteController extends GetxController {
       hsl.lightness
     ];
     update();
-    print(rgbhsl);
+    print('$rgbhsl' + darkPopulation.toString());
     box.write('rgbhsl', rgbhsl);
     // knnController.hitungKNN(paletteGenerator!);
   }

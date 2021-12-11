@@ -5,9 +5,10 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:knn_wortel/data/data_training.dart';
 import 'package:palette_generator/palette_generator.dart';
+import 'knn_kualitas.dart';
 
 class KNNController extends GetxController {
-  // final knnKualitasController = Get.put(KNNKualitasController());
+  final knnKualitasController = Get.put(KNNKualitasController());
   final box = GetStorage();
   List knn = [];
   void hitungKNN(PaletteGenerator paletteGenerator) {
@@ -40,7 +41,7 @@ class KNNController extends GetxController {
     knn = edList;
     update();
     Navigator.of(Get.overlayContext!).pop();
-    // knnKualitasController.getKualitas(edList);
+    knnKualitasController.getKualitas(edList);
     box.write('knn', knn);
   }
 

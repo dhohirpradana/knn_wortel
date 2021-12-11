@@ -228,12 +228,35 @@ class HomePage extends StatelessWidget {
             builder: (_) => Container(
               height: 90,
               color: (paletteController.paletteGenerator != null)
+                  ? (paletteController.paletteGenerator!.dominantColor != null)
+                      ? paletteController.paletteGenerator!.dominantColor!.color
+                      : paletteController
+                          .paletteGenerator!.darkVibrantColor!.color
+                  : Colors.white,
+            ),
+          ),
+          GetBuilder<PaletteController>(
+            builder: (_) => Container(
+              height: 90,
+              color: (paletteController.paletteGenerator != null)
                   ? (paletteController.paletteGenerator!.darkMutedColor != null)
                       ? paletteController
                           .paletteGenerator!.darkMutedColor!.color
                       : paletteController
                           .paletteGenerator!.darkVibrantColor!.color
                   : Colors.white,
+              child: Center(
+                  child: Text(
+                (paletteController.paletteGenerator != null)
+                    ? (paletteController.paletteGenerator!.darkMutedColor !=
+                            null)
+                        ? paletteController
+                            .paletteGenerator!.darkMutedColor!.population
+                            .toString()
+                        : '0'
+                    : 'No Data',
+                style: const TextStyle(color: Colors.yellow),
+              )),
             ),
           )
         ],
