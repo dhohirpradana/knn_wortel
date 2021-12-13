@@ -14,12 +14,10 @@ class KNNKualitasController extends GetxController {
       sum = edList[i]['kualitas'] + sum;
     }
 
-    //jika garam kualitas 1 'premium' lebih dominance
-    //maka kualitas garam testing adalah Premium
     if (sum > n / 2) {
-      kualitas = 'Premium';
+      kualitas = 'Layak';
     } else {
-      kualitas = 'Non-premium';
+      kualitas = 'Tidak Layak';
     }
     update();
 

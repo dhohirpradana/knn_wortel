@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -19,12 +18,15 @@ class PaletteController extends GetxController {
     paletteGenerator = await PaletteGenerator.fromImageProvider(
       Image.file(file).image,
     );
-    final color = (paletteGenerator!.darkMutedColor != null)
-        ? paletteGenerator!.darkMutedColor!.color
-        : paletteGenerator!.darkVibrantColor!.color;
     final darkPopulation = (paletteGenerator!.darkMutedColor != null)
         ? paletteGenerator!.darkMutedColor!.population
         : 0;
+    print(darkPopulation);
+    final color = (darkPopulation > 100)
+        ? paletteGenerator!.darkMutedColor!.color
+        : (paletteGenerator!.darkVibrantColor != null)
+            ? paletteGenerator!.darkVibrantColor!.color
+            : paletteGenerator!.darkMutedColor!.color;
     final hsl = HSLColor.fromColor(color);
     rgbhsl = [
       color.red,
@@ -32,12 +34,13 @@ class PaletteController extends GetxController {
       color.blue,
       hsl.hue,
       hsl.saturation,
-      hsl.lightness
+      hsl.lightness,
+      1
     ];
+    print(rgbhsl);
     update();
-    print('$rgbhsl' + darkPopulation.toString());
     box.write('rgbhsl', rgbhsl);
-    // knnController.hitungKNN(paletteGenerator!);
+    knnController.hitungKNN(paletteGenerator!);
   }
 
   void getStorageRGBHSL(List rgbhslData) {

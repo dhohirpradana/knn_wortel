@@ -24,6 +24,7 @@ class FoundationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           elevation: 2,
           backgroundColor: AppColor.orange,

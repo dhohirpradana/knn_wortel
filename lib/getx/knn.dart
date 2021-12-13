@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:knn_wortel/data/data_training.dart';
@@ -40,7 +39,7 @@ class KNNController extends GetxController {
     }
     knn = edList;
     update();
-    Navigator.of(Get.overlayContext!).pop();
+    // Navigator.of(Get.overlayContext!).pop();
     knnKualitasController.getKualitas(edList);
     box.write('knn', knn);
   }

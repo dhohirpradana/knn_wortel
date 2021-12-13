@@ -32,27 +32,33 @@ class TrainingPage extends StatelessWidget {
               // child:
               (i < 31)
                   ? Padding(
-                      padding: const EdgeInsets.only(top: 3),
+                      padding: const EdgeInsets.only(top: 1),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.white,
+                            ),
                             padding: const EdgeInsets.symmetric(
                                 vertical: 2, horizontal: 3),
-                            color: Colors.white,
                             child: const Text('LAYAK'),
                           ),
                         ],
                       ),
                     )
                   : Padding(
-                      padding: const EdgeInsets.only(top: 3),
+                      padding: const EdgeInsets.only(top: 1),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.white,
+                            ),
                             padding: const EdgeInsets.all(2.5),
-                            color: Colors.white,
                             child: const Text('TIDAK LAYAK'),
                           ),
                         ],

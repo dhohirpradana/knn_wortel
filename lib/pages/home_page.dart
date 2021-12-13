@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:knn_wortel/getx/image_picker.dart';
+import 'package:knn_wortel/getx/knn.dart';
+import 'package:knn_wortel/getx/knn_kualitas.dart';
 import 'package:knn_wortel/getx/palette_generator.dart';
 import 'package:knn_wortel/widgets/app_color.dart';
 
@@ -13,6 +15,8 @@ class HomePage extends StatelessWidget {
 
   final ImagePickerController imagePickerController =
       Get.put(ImagePickerController());
+  final knnController = Get.put(KNNController());
+  final kualitasController = Get.put(KNNKualitasController());
   final PaletteController paletteController = Get.put(PaletteController());
 
   void _openCamera(BuildContext context) async {
@@ -224,39 +228,63 @@ class HomePage extends StatelessWidget {
             },
             child: const Text("Pilih Image"),
           ),
-          GetBuilder<PaletteController>(
-            builder: (_) => Container(
-              height: 90,
-              color: (paletteController.paletteGenerator != null)
-                  ? (paletteController.paletteGenerator!.dominantColor != null)
-                      ? paletteController.paletteGenerator!.dominantColor!.color
-                      : paletteController
-                          .paletteGenerator!.darkVibrantColor!.color
-                  : Colors.white,
+          GetBuilder<KNNKualitasController>(
+            builder: (_) => SizedBox(
+              child: GetBuilder<PaletteController>(
+                builder: (_) => Container(
+                  padding: const EdgeInsets.all(5),
+                  width: Get.width,
+                  color: (paletteController.paletteGenerator != null)
+                      ? (paletteController.paletteGenerator!.darkMutedColor !=
+                              null)
+                          ? paletteController
+                              .paletteGenerator!.darkMutedColor!.color
+                          : paletteController
+                              .paletteGenerator!.darkVibrantColor!.color
+                      : Colors.white,
+                  child: Center(
+                    child: Text(
+                      (kualitasController.kualitas == null)
+                          ? 'Tidak ada image'
+                          : kualitasController.kualitas!.toUpperCase(),
+                      style: const TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
-          GetBuilder<PaletteController>(
-            builder: (_) => Container(
-              height: 90,
-              color: (paletteController.paletteGenerator != null)
-                  ? (paletteController.paletteGenerator!.darkMutedColor != null)
-                      ? paletteController
-                          .paletteGenerator!.darkMutedColor!.color
-                      : paletteController
-                          .paletteGenerator!.darkVibrantColor!.color
-                  : Colors.white,
-              child: Center(
-                  child: Text(
-                (paletteController.paletteGenerator != null)
-                    ? (paletteController.paletteGenerator!.darkMutedColor !=
-                            null)
-                        ? paletteController
-                            .paletteGenerator!.darkMutedColor!.population
-                            .toString()
-                        : '0'
-                    : 'No Data',
-                style: const TextStyle(color: Colors.yellow),
-              )),
+          //listview
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+              child: GetBuilder<KNNController>(
+                builder: (_) => (knnController.knn.isEmpty)
+                    ? const SizedBox()
+                    : ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: kualitasController.n,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            tileColor:
+                                (knnController.knn[index]['kualitas'] == 1)
+                                    ? Colors.green[50]
+                                    : Colors.red[50],
+                            leading: Text((index + 1).toString()),
+                            title: Text(
+                                (knnController.knn[index]['kualitas'] == 1)
+                                    ? 'Layak'
+                                    : 'Tidak Layak'),
+                            subtitle: Text('Jarak : ' +
+                                knnController.knn[index]['jarak'].toString()),
+                          );
+                        },
+                      ),
+              ),
             ),
           )
         ],

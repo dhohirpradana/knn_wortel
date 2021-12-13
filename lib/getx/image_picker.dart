@@ -16,4 +16,9 @@ class ImagePickerController extends GetxController {
     paletteController.updatePalette(File(imageFile!.path));
     Navigator.of(Get.overlayContext!).pop();
   }
+
+  void updateImagePath(String imagePath) {
+    imageFile = PickedFile(imagePath);
+    update();
+  }
 }
