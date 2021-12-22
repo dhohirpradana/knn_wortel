@@ -8,6 +8,7 @@ import 'package:knn_wortel/getx/knn.dart';
 import 'package:knn_wortel/getx/knn_kualitas.dart';
 import 'package:knn_wortel/getx/palette_generator.dart';
 import 'package:knn_wortel/widgets/app_color.dart';
+import 'package:knn_wortel/widgets/substr.dart';
 
 class HomePage extends StatelessWidget {
   // ignore: prefer_const_constructors_in_immutables
@@ -159,57 +160,48 @@ class HomePage extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       const Text('Data Image :'),
-                                      Text('R : ' +
-                                          paletteController.rgbhsl[0]
-                                              .toString()),
-                                      Text('G : ' +
-                                          paletteController.rgbhsl[1]
-                                              .toString()),
-                                      Text('B : ' +
-                                          paletteController.rgbhsl[2]
-                                              .toString()),
-                                      Text('H : ' +
-                                          paletteController.rgbhsl[3]
-                                              .toString()
-                                              .substring(
-                                                  0,
-                                                  (paletteController.rgbhsl[3]
-                                                              .toString()
-                                                              .length >
-                                                          5)
-                                                      ? 5
-                                                      : paletteController
-                                                          .rgbhsl[3]
-                                                          .toString()
-                                                          .length)),
-                                      Text('S : ' +
-                                          paletteController.rgbhsl[4]
-                                              .toString()
-                                              .substring(
-                                                  0,
-                                                  (paletteController.rgbhsl[4]
-                                                              .toString()
-                                                              .length >
-                                                          5)
-                                                      ? 5
-                                                      : paletteController
-                                                          .rgbhsl[4]
-                                                          .toString()
-                                                          .length)),
-                                      Text('L : ' +
-                                          paletteController.rgbhsl[5]
-                                              .toString()
-                                              .substring(
-                                                  0,
-                                                  (paletteController.rgbhsl[5]
-                                                              .toString()
-                                                              .length >
-                                                          5)
-                                                      ? 5
-                                                      : paletteController
-                                                          .rgbhsl[5]
-                                                          .toString()
-                                                          .length))
+                                      Row(
+                                        children: [
+                                          const Text('r : '),
+                                          substringText(
+                                              paletteController.rgbhsl[0])
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text('g : '),
+                                          substringText(
+                                              paletteController.rgbhsl[1])
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text('b : '),
+                                          substringText(
+                                              paletteController.rgbhsl[2])
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text('h : '),
+                                          substringText(
+                                              paletteController.rgbhsl[3])
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text('s : '),
+                                          substringText(
+                                              paletteController.rgbhsl[4])
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text('l : '),
+                                          substringText(
+                                              paletteController.rgbhsl[5])
+                                        ],
+                                      )
                                     ],
                                   ),
                                 )
@@ -234,14 +226,16 @@ class HomePage extends StatelessWidget {
                 builder: (_) => Container(
                   padding: const EdgeInsets.all(5),
                   width: Get.width,
-                  color: (paletteController.paletteGenerator != null)
-                      ? (paletteController.paletteGenerator!.darkMutedColor !=
-                              null)
-                          ? paletteController
-                              .paletteGenerator!.darkMutedColor!.color
-                          : paletteController
-                              .paletteGenerator!.darkVibrantColor!.color
-                      : Colors.white,
+                  color:
+                      // (paletteController.paletteGenerator != null)
+                      //     ? (paletteController.paletteGenerator!.darkMutedColor !=
+                      //             null)
+                      //         ? paletteController
+                      //             .paletteGenerator!.darkMutedColor!.color
+                      //         : paletteController
+                      //             .paletteGenerator!.darkVibrantColor!.color
+                      //     :
+                      Colors.white,
                   child: Center(
                     child: Text(
                       (kualitasController.kualitas == null)
@@ -279,8 +273,54 @@ class HomePage extends StatelessWidget {
                                 (knnController.knn[index]['kualitas'] == 1)
                                     ? 'Layak'
                                     : 'Tidak Layak'),
-                            subtitle: Text('Jarak : ' +
-                                knnController.knn[index]['jarak'].toString()),
+                            subtitle: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    const Text('r : '),
+                                    substringText(knnController.knn[index]['r'])
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Text('g : '),
+                                    substringText(knnController.knn[index]['g'])
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Text('b : '),
+                                    substringText(knnController.knn[index]['b'])
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Text('h : '),
+                                    substringText(knnController.knn[index]['h'])
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Text('s : '),
+                                    substringText(knnController.knn[index]['s'])
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Text('l : '),
+                                    substringText(knnController.knn[index]['l'])
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Text('d : '),
+                                    substringText(
+                                        knnController.knn[index]['jarak'])
+                                  ],
+                                ),
+                              ],
+                            ),
                           );
                         },
                       ),

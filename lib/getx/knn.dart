@@ -12,10 +12,28 @@ class KNNController extends GetxController {
   List knn = [];
   void hitungKNN(PaletteGenerator paletteGenerator) {
     List edList = [];
+    final darkPopulation = (paletteGenerator.darkMutedColor != null)
+        ? paletteGenerator.darkMutedColor!.population
+        : 0;
+    final color = (darkPopulation > 100)
+        ? paletteGenerator.darkMutedColor!.color
+        : (paletteGenerator.darkVibrantColor != null)
+            ? paletteGenerator.darkVibrantColor!.color
+            : (paletteGenerator.darkMutedColor != null)
+                ? paletteGenerator.darkMutedColor!.color
+                : paletteGenerator.dominantColor!.color;
     //convert warna data testing ke HSL
-    var hsl = HSLColor.fromColor(paletteGenerator.dominantColor!.color);
+    var hsl = HSLColor.fromColor(color);
     for (var i = 0; i < dataTraining.length; i++) {
       //selisih diukuadratkan
+      // rgb
+
+      final rd = (dataTraining[i]['r'] - color.red) *
+          (dataTraining[i]['r'] - color.red);
+      final gd = (dataTraining[i]['g'] - color.green) *
+          (dataTraining[i]['g'] - color.green);
+      final bd = (dataTraining[i]['b'] - color.blue) *
+          (dataTraining[i]['b'] - color.blue);
       //hue distance/ jarak hue
       final hd =
           (dataTraining[i]['h'] - hsl.hue) * (dataTraining[i]['h'] - hsl.hue);
@@ -27,10 +45,16 @@ class KNNController extends GetxController {
           (dataTraining[i]['l'] - hsl.lightness);
       //eulidience distance
       //RUMUS : akar/ sqrt dari jumlah hd + sd + ld
-      final ed = sqrt(hd + sd + ld);
+      final ed = sqrt(rd + gd + bd + hd + sd + ld);
       edList.add(
         {
           'jarak': ed,
+          'r': dataTraining[i]['r'],
+          'g': dataTraining[i]['g'],
+          'b': dataTraining[i]['b'],
+          'h': dataTraining[i]['h'],
+          's': dataTraining[i]['s'],
+          'l': dataTraining[i]['l'],
           'kualitas': dataTraining[i]['q'],
         },
       );

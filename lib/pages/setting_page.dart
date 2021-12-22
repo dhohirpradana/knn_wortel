@@ -41,6 +41,8 @@ class SettingPage extends StatelessWidget {
                   return 'Tidak boleh kosong!';
                 } else if (value == '0') {
                   return 'Tidak boleh nol!';
+                } else if (int.parse(value) == knnKualitasController.n) {
+                  return 'Tidak ada perubahan nilai!';
                 }
                 return null;
               },
@@ -85,7 +87,7 @@ class SettingPage extends StatelessWidget {
                   );
                   await Future.delayed(const Duration(seconds: 2));
                   Get.back();
-                  await Future.delayed(const Duration(milliseconds: 300));
+                  await Future.delayed(const Duration(milliseconds: 150));
                   AwesomeDialog(
                     dismissOnTouchOutside: false,
                     dismissOnBackKeyPress: false,

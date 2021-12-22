@@ -21,12 +21,13 @@ class PaletteController extends GetxController {
     final darkPopulation = (paletteGenerator!.darkMutedColor != null)
         ? paletteGenerator!.darkMutedColor!.population
         : 0;
-    print(darkPopulation);
     final color = (darkPopulation > 100)
         ? paletteGenerator!.darkMutedColor!.color
         : (paletteGenerator!.darkVibrantColor != null)
             ? paletteGenerator!.darkVibrantColor!.color
-            : paletteGenerator!.darkMutedColor!.color;
+            : (paletteGenerator!.darkMutedColor != null)
+                ? paletteGenerator!.darkMutedColor!.color
+                : paletteGenerator!.dominantColor!.color;
     final hsl = HSLColor.fromColor(color);
     rgbhsl = [
       color.red,
@@ -37,7 +38,6 @@ class PaletteController extends GetxController {
       hsl.lightness,
       1
     ];
-    print(rgbhsl);
     update();
     box.write('rgbhsl', rgbhsl);
     knnController.hitungKNN(paletteGenerator!);
