@@ -28,24 +28,37 @@ class KNNController extends GetxController {
       //selisih diukuadratkan
       // rgb
 
-      final rd = (dataTraining[i]['r'] - color.red) *
-          (dataTraining[i]['r'] - color.red);
-      final gd = (dataTraining[i]['g'] - color.green) *
-          (dataTraining[i]['g'] - color.green);
-      final bd = (dataTraining[i]['b'] - color.blue) *
-          (dataTraining[i]['b'] - color.blue);
+      // fuzzifikasi
+      final r1 = dataTraining[i]['r'] / 255;
+      final g1 = dataTraining[i]['g'] / 255;
+      final b1 = dataTraining[i]['b'] / 255;
+      final h1 = dataTraining[i]['h'] / 360;
+      final s1 = dataTraining[i]['s'];
+      final l1 = dataTraining[i]['l'];
+
+      final r2 = color.red / 255;
+      final g2 = color.green / 255;
+      final b2 = color.blue / 255;
+      final h2 = hsl.hue / 360;
+      final s2 = hsl.saturation;
+      final l2 = hsl.lightness;
+
+      // jarak rgb
+      final rd = (r1 - r2) * (r1 - r2);
+      final gd = (g1 - g2) * (g1 - g2);
+      final bd = (b1 - b2) * (b1 - b2);
       //hue distance/ jarak hue
-      final hd =
-          (dataTraining[i]['h'] - hsl.hue) * (dataTraining[i]['h'] - hsl.hue);
+      final hd = (h1 - h2) * (h1 - h2);
       //jarak saturation
-      final sd = (dataTraining[i]['s'] - hsl.saturation) *
-          (dataTraining[i]['s'] - hsl.saturation);
+      final sd = (s1 - s2) * (s1 - s2);
       //jarak lightness
-      final ld = (dataTraining[i]['l'] - hsl.lightness) *
-          (dataTraining[i]['l'] - hsl.lightness);
+      final ld = (l1 - l2) * (l1 - l2);
+
+      final sum = rd + gd + bd + hd + sd + ld;
+
       //eulidience distance
-      //RUMUS : akar/ sqrt dari jumlah hd + sd + ld
-      final ed = sqrt(rd + gd + bd + hd + sd + ld);
+      //RUMUS : akar/ sqrt dari jumlah
+      final ed = sqrt(sum);
       edList.add(
         {
           'jarak': ed,
