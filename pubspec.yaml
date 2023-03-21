@@ -30,7 +30,7 @@ dependencies:
   awesome_dialog: ^2.1.2
   bottom_navy_bar: ^6.0.0
   cupertino_icons: ^1.0.2
-  dio: ^4.0.3
+  dio: ^5.0.3
   flutter:
     sdk: flutter
   get: ^4.3.8
